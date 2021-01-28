@@ -2,18 +2,18 @@ var submitBtn = document.querySelector('.btn-submit');
 var cityInput = document.querySelector('input');
 var cityName = cityInput.value;
 var pastCityNames= [];
-var pastCityColumnEl = document.querySelector(".past-city")
+var pastCityColumnEl = document.querySelector(".past-city");
+var cityButton = document.querySelector('.btn-city');
 
 function addPastCity(){
     for(var i = 0; i < pastCityNames.length; i++){
         var pastCityEl = document.createElement("button");
         var lineBreak = document.createElement("br");
-        pastCityEl.setAttribute("class", "btn btn-outline-primary");
+        pastCityEl.setAttribute("class", "btn btn-outline-primary btn-city");
         pastCityEl.textContent = pastCityNames[i];
-        pastCityColumnEl.append(lineBreak);
         pastCityColumnEl.append(pastCityEl);
+        pastCityColumnEl.append(lineBreak);
     }
-
     storeCities();
 }
 
@@ -28,8 +28,6 @@ function init(){
         pastCityColumnEl.innerHTML= "";
         addPastCity();
     }
-
-
 }
 
 submitBtn.addEventListener("click", function(){
