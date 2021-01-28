@@ -23,6 +23,7 @@ function addPastCity(){
         cityBtn.addEventListener("click", function(){
             var clickedCity = this.textContent;
             console.log(clickedCity);
+            getWeather(clickedCity);
         })
     })
 }
@@ -50,6 +51,8 @@ function getWeather(cityName){
             response.json().then(function (data){
                 console.log(data);
             })
+        } else{
+            alert("Error: ", response.statusText);
         }
     })
 }
