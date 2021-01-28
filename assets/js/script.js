@@ -3,9 +3,10 @@ var cityInput = document.querySelector('input');
 var cityName = cityInput.value;
 var pastCityNames= [];
 var pastCityColumnEl = document.querySelector(".past-city");
-var cityButton = document.querySelector('.btn-city');
+
 
 function addPastCity(){
+    // previous searches button creation
     for(var i = 0; i < pastCityNames.length; i++){
         var pastCityEl = document.createElement("button");
         var lineBreak = document.createElement("br");
@@ -15,12 +16,23 @@ function addPastCity(){
         pastCityColumnEl.append(lineBreak);
     }
     storeCities();
+
+    // add event listener to each city button that was created
+    var cityBtn = document.querySelectorAll('.btn-city');
+    cityBtn.forEach(function(cityBtn){
+        cityBtn.addEventListener("click", function(){
+            var clickedCity = this.textContent;
+            console.log(clickedCity);
+        })
+    })
 }
 
+// store cities that have been entered
 function storeCities(){
     localStorage.setItem("storedCityNames", JSON.stringify(pastCityNames));
 }
 
+// run this every time the page is restored
 function init(){
     var storedCities = JSON.parse(localStorage.getItem("storedCityNames"));
     if (storedCities != null){
@@ -30,6 +42,7 @@ function init(){
     }
 }
 
+// listener on submit button 
 submitBtn.addEventListener("click", function(){
     cityName = cityInput.value;
     pastCityColumnEl.innerHTML= "";
@@ -38,5 +51,6 @@ submitBtn.addEventListener("click", function(){
     console.log(pastCityNames);
     addPastCity();
 });
+
 
 init();
