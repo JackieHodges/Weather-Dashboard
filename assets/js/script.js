@@ -42,6 +42,18 @@ function init(){
     }
 }
 
+function getWeather(cityName){
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=9c005e62d72b836ee4b52b06d168a428";
+    
+    fetch(apiUrl).then(function(response) {
+        if (response.ok){
+            response.json().then(function (data){
+                console.log(data);
+            })
+        }
+    })
+}
+
 // listener on submit button 
 submitBtn.addEventListener("click", function(){
     cityName = cityInput.value;
@@ -50,6 +62,7 @@ submitBtn.addEventListener("click", function(){
     console.log("inputed city is", cityName)
     console.log(pastCityNames);
     addPastCity();
+    getWeather(cityName);
 });
 
 
