@@ -24,6 +24,8 @@ function addPastCity(){
         cityBtn.addEventListener("click", function(){
             var clickedCity = this.textContent;
             console.log(clickedCity);
+            // clears previous city weather listed
+            currentWeatherEl.innerHTML= "";
             getWeather(clickedCity);
         })
     })
@@ -74,23 +76,42 @@ function currentWeather(data){
     currentWeatherEl.append(cityNameEl);
 
     var temperatureEl = document.createElement("p");
-    temperatureEl.textContent = "Temperature: " + cityCurrentWeather.currentTemp;
+    temperatureEl.textContent = "Temperature: " + cityCurrentWeather.currentTemp + " ℉";
     currentWeatherEl.append(temperatureEl);
 
+    var humidityEl = document.createElement("p");
+    humidityEl.textContent = "Humidity: " + cityCurrentWeather.currentHumidity + "%";
+    currentWeatherEl.append(humidityEl);
 
+    var windSpeedEl = document.createElement("p");
+    windSpeedEl.textContent = "Wind Speed: " + cityCurrentWeather.currentWindSpeed + " MPH";
+    currentWeatherEl.append(windSpeedEl);
 
+    var uvIndexEl = document.createElement("p");
+    uvIndexEl.textContent = "UV Index: ";
+    currentWeatherEl.append(uvIndexEl);
 
 }
 
 // listener on submit button 
 submitBtn.addEventListener("click", function(){
+
     cityName = cityInput.value;
-    pastCityColumnEl.innerHTML= "";
-    pastCityNames.push(cityName);
-    console.log("inputed city is", cityName)
-    console.log(pastCityNames);
-    addPastCity();
-    getWeather(cityName);
+
+    if (cityName != ""){
+        // clears previous searches list
+        pastCityColumnEl.innerHTML= "";
+        // clears previous city weather listed
+        currentWeatherEl.innerHTML= "";
+
+        pastCityNames.push(cityName);
+        console.log("inputed city is", cityName)
+        console.log(pastCityNames);
+        addPastCity();
+        getWeather(cityName);
+    } else{
+        alert("Please enter a city name");
+    }
 });
 
 
