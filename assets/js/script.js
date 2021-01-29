@@ -27,7 +27,7 @@ function addPastCity(){
             console.log(clickedCity);
             // clears previous city weather listed
             currentWeatherEl.innerHTML= "";
-            getCurrentWeather(clickedCity);
+            getLatLongs(clickedCity);
         })
     })
 }
@@ -47,39 +47,57 @@ function init(){
     }
 }
 
-function getCurrentWeather(cityName){
+function getLatLongs(cityName){
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=9c005e62d72b836ee4b52b06d168a428&units=imperial";
-    
+
     fetch(apiUrl).then(function(response) {
         if (response.ok){
             response.json().then(function (data){
                 console.log("current weather", data);
                 console.log("lat", data.coord.lat);
                 console.log("long", data.coord.lon);
-                currentWeather(data);
+                getCurrentWeather(data.coord.lat, data.coord.lon);
                 getFiveDayWeather(data.coord.lat, data.coord.lon);
+            })
+        } else{
+            fiveDayEl.innerHTML = "";
+            alert("Error: City cannot be read.", response.statusText);
+            return;
+        }
+    })
+}
+
+function getCurrentWeather(lat, long){
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&exclude=minutely,hourly,daily,alerts&appid=9c005e62d72b836ee4b52b06d168a428&units=imperial";
+    
+    fetch(apiUrl).then(function(response) {
+        if (response.ok){
+            response.json().then(function (data){
+                console.log("current weather", data);
+                currentWeatherEl.innerHTML = "";
+                currentWeather(data);
             })
         } else{
             alert("Error: ", response.statusText);
         }
     })
+
 }
 
 function currentWeather(data){
     var cityCurrentWeather = {
-        cityName: data.name,
-        currentIcon: data.weather[0],
-        currentTemp: data.main.temp,
-        currentHumidity: data.main.humidity,
-        currentWindSpeed: data.wind.speed
-        // currentUvIndex = data.
+        cityName: cityName,
+        // currentIcon: data.weather[0],
+        currentTemp: data.current.temp,
+        currentHumidity: data.current.humidity,
+        currentWindSpeed: data.current.wind_speed,
+        currentUvIndex: data.current.uvi
     }
 
     var cityNameEl = document.createElement("h1");
-    // var iconEl = document.createElement("i");
-    // iconEl.setAttribute("id", cityCurrentWeather.currentIcon.id);
-    // iconEl.textContent = cityCurrentWeather.currentIcon.icon;
-    cityNameEl.textContent = cityCurrentWeather.cityName;
+    var iconEl = document.createElement("i");
+    // iconEl.setAttribute("class", cityCurrentWeather.currentIcon);
+    cityNameEl.textContent = cityName;
     currentWeatherEl.append(cityNameEl);
     // currentWeatherEl.append(iconEl);
 
@@ -96,7 +114,7 @@ function currentWeather(data){
     currentWeatherEl.append(windSpeedEl);
 
     var uvIndexEl = document.createElement("p");
-    uvIndexEl.textContent = "UV Index: ";
+    uvIndexEl.textContent = "UV Index: " + cityCurrentWeather.currentUvIndex;
     currentWeatherEl.append(uvIndexEl);
 
 }
@@ -154,7 +172,7 @@ submitBtn.addEventListener("click", function(){
         console.log("inputed city is", cityName)
         console.log(pastCityNames);
         addPastCity();
-        getCurrentWeather(cityName);;
+        getLatLongs(cityName);;
     } else{
         alert("Please enter a city name");
     }
