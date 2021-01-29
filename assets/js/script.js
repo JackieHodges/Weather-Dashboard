@@ -1,6 +1,6 @@
 var submitBtn = document.querySelector('.btn-submit');
 var cityInput = document.querySelector('input');
-var cityName = cityInput.value;
+var cityName;
 var pastCityNames= [];
 var pastCityColumnEl = document.querySelector(".past-city");
 var currentWeatherEl = document.querySelector(".current-weather");
@@ -47,8 +47,8 @@ function init(){
     }
 }
 
-function getLatLongs(cityName){
-    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=9c005e62d72b836ee4b52b06d168a428&units=imperial";
+function getLatLongs(city){
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=9c005e62d72b836ee4b52b06d168a428&units=imperial";
 
     fetch(apiUrl).then(function(response) {
         if (response.ok){
@@ -56,6 +56,7 @@ function getLatLongs(cityName){
                 console.log("current weather", data);
                 console.log("lat", data.coord.lat);
                 console.log("long", data.coord.lon);
+                cityName = city;
                 getCurrentWeather(data.coord.lat, data.coord.lon);
                 getFiveDayWeather(data.coord.lat, data.coord.lon);
             })
