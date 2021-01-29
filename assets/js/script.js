@@ -1,6 +1,7 @@
 var submitBtn = document.querySelector('.btn-submit');
 var cityInput = document.querySelector('input');
 var cityName;
+var todaysDate;
 var pastCityNames= [];
 var pastCityColumnEl = document.querySelector(".past-city");
 var currentWeatherEl = document.querySelector(".current-weather");
@@ -57,6 +58,7 @@ function getLatLongs(city){
                 console.log("lat", data.coord.lat);
                 console.log("long", data.coord.lon);
                 cityName = city;
+                todaysDate = data.dt;
                 getCurrentWeather(data.coord.lat, data.coord.lon);
                 getFiveDayWeather(data.coord.lat, data.coord.lon);
             })
@@ -74,7 +76,6 @@ function getCurrentWeather(lat, long){
     fetch(apiUrl).then(function(response) {
         if (response.ok){
             response.json().then(function (data){
-                console.log("current weather", data);
                 currentWeatherEl.innerHTML = "";
                 currentWeather(data);
             })
@@ -88,7 +89,7 @@ function getCurrentWeather(lat, long){
 function currentWeather(data){
     var cityCurrentWeather = {
         cityName: cityName,
-        // currentIcon: data.weather[0],
+        currentIcon: data.current.weather[0].id,
         currentTemp: data.current.temp,
         currentHumidity: data.current.humidity,
         currentWindSpeed: data.current.wind_speed,
@@ -96,11 +97,17 @@ function currentWeather(data){
     }
 
     var cityNameEl = document.createElement("h1");
-    var iconEl = document.createElement("i");
-    // iconEl.setAttribute("class", cityCurrentWeather.currentIcon);
     cityNameEl.textContent = cityName;
     currentWeatherEl.append(cityNameEl);
-    // currentWeatherEl.append(iconEl);
+
+    var todaysDateEl = document.createElement("h1");
+    todaysDateEl.textContent = todaysDate;
+    currentWeatherEl.append(todaysDateEl);
+
+    var iconEl = document.createElement("i");
+    iconEl.setAttribute("id", cityCurrentWeather.currentIcon);
+    // iconEl.setAttribute("class", cityCurrentWeather.currentIcon.icon);
+    currentWeatherEl.append(iconEl);
 
     var temperatureEl = document.createElement("p");
     temperatureEl.textContent = "Temperature: " + cityCurrentWeather.currentTemp + " ℉";
