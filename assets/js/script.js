@@ -154,8 +154,7 @@ submitBtn.addEventListener("click", function(){
         console.log("inputed city is", cityName)
         console.log(pastCityNames);
         addPastCity();
-        getCurrentWeather(cityName);
-        getFiveDayWeather(cityName);
+        getCurrentWeather(cityName);;
     } else{
         alert("Please enter a city name");
     }
