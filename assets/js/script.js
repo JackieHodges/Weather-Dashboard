@@ -26,7 +26,7 @@ function addPastCity(){
             console.log(clickedCity);
             // clears previous city weather listed
             currentWeatherEl.innerHTML= "";
-            getWeather(clickedCity);
+            getCurrentWeather(clickedCity);
         })
     })
 }
@@ -46,14 +46,17 @@ function init(){
     }
 }
 
-function getWeather(cityName){
+function getCurrentWeather(cityName){
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=9c005e62d72b836ee4b52b06d168a428&units=imperial";
     
     fetch(apiUrl).then(function(response) {
         if (response.ok){
             response.json().then(function (data){
-                console.log(data);
+                console.log("current weather", data);
+                console.log("lat", data.coord.lat);
+                console.log("long", data.coord.lon);
                 currentWeather(data);
+                getFiveDayWeather(data.coord.lat, data.coord.lon);
             })
         } else{
             alert("Error: ", response.statusText);
@@ -64,7 +67,7 @@ function getWeather(cityName){
 function currentWeather(data){
     var cityCurrentWeather = {
         cityName: data.name,
-        currentIcon: data.weather[0].icon,
+        currentIcon: data.weather[0],
         currentTemp: data.main.temp,
         currentHumidity: data.main.humidity,
         currentWindSpeed: data.wind.speed
@@ -72,8 +75,12 @@ function currentWeather(data){
     }
 
     var cityNameEl = document.createElement("h1");
-    cityNameEl.textContent = cityCurrentWeather.cityName + " " + cityCurrentWeather.currentIcon;
+    // var iconEl = document.createElement("i");
+    // iconEl.setAttribute("id", cityCurrentWeather.currentIcon.id);
+    // iconEl.textContent = cityCurrentWeather.currentIcon.icon;
+    cityNameEl.textContent = cityCurrentWeather.cityName;
     currentWeatherEl.append(cityNameEl);
+    // currentWeatherEl.append(iconEl);
 
     var temperatureEl = document.createElement("p");
     temperatureEl.textContent = "Temperature: " + cityCurrentWeather.currentTemp + " ℉";
@@ -93,6 +100,30 @@ function currentWeather(data){
 
 }
 
+function getFiveDayWeather(lat, long){
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&exclude=current,minutely,hourly,alerts&appid=9c005e62d72b836ee4b52b06d168a428&units=imperial";
+    fetch(apiUrl).then(function(response) {
+        if (response.ok){
+            response.json().then(function (data){
+                console.log("5 day weather", data);
+                fiveDayWeather(data);
+            })
+        } else{
+            alert("Error: ", response.statusText);
+        }
+    })
+}
+
+function fiveDayWeather(data){
+    for (var i = 0; i < 5; i++){
+        var dailyDateEl = document.createElement("div");
+        dailyDateEl.setAttribute("class", "col");
+        dailyDateEl.textContent = data.daily[i].dt;
+        var fiveDayEl = document.querySelector(".five-day-weather");
+        fiveDayEl.append(dailyDateEl);
+    }
+}
+
 // listener on submit button 
 submitBtn.addEventListener("click", function(){
 
@@ -108,7 +139,8 @@ submitBtn.addEventListener("click", function(){
         console.log("inputed city is", cityName)
         console.log(pastCityNames);
         addPastCity();
-        getWeather(cityName);
+        getCurrentWeather(cityName);
+        getFiveDayWeather(cityName);
     } else{
         alert("Please enter a city name");
     }
