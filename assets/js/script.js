@@ -4,6 +4,7 @@ var cityName = cityInput.value;
 var pastCityNames= [];
 var pastCityColumnEl = document.querySelector(".past-city");
 var currentWeatherEl = document.querySelector(".current-weather");
+var fiveDayEl = document.querySelector(".five-day-weather");
 
 
 function addPastCity(){
@@ -106,6 +107,7 @@ function getFiveDayWeather(lat, long){
         if (response.ok){
             response.json().then(function (data){
                 console.log("5 day weather", data);
+                fiveDayEl.innerHTML = "";
                 fiveDayWeather(data);
             })
         } else{
@@ -117,9 +119,8 @@ function getFiveDayWeather(lat, long){
 function fiveDayWeather(data){
     for (var i = 0; i < 5; i++){
         var dailyDateEl = document.createElement("div");
-        dailyDateEl.setAttribute("class", "col");
+        dailyDateEl.setAttribute("class", "col card");
         dailyDateEl.textContent = data.daily[i].dt;
-        var fiveDayEl = document.querySelector(".five-day-weather");
         fiveDayEl.append(dailyDateEl);
 
         // var iconEl = document.createElement("i");
