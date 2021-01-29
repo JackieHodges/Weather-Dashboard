@@ -121,6 +121,20 @@ function fiveDayWeather(data){
         dailyDateEl.textContent = data.daily[i].dt;
         var fiveDayEl = document.querySelector(".five-day-weather");
         fiveDayEl.append(dailyDateEl);
+
+        // var iconEl = document.createElement("i");
+        // iconEl.setAttribute("id", data.daily[i].weather[0].id);
+        // iconEl.textContent = test;
+        // dailyDateEl.append(iconEl);
+
+        var temperatureEl = document.createElement("p");
+        temperatureEl.textContent = "Temp: " + data.daily[i].temp.day + " ℉";
+        dailyDateEl.append(temperatureEl);
+
+        var humidityEl = document.createElement("p");
+        humidityEl.textContent = "Humidity: " + data.daily[i].humidity + "%";
+        dailyDateEl.append(humidityEl);
+
     }
 }
 
