@@ -3,6 +3,7 @@ var cityInput = document.querySelector('input');
 var cityName = cityInput.value;
 var pastCityNames= [];
 var pastCityColumnEl = document.querySelector(".past-city");
+var currentWeatherEl = document.querySelector(".current-weather");
 
 
 function addPastCity(){
@@ -44,17 +45,41 @@ function init(){
 }
 
 function getWeather(cityName){
-    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=9c005e62d72b836ee4b52b06d168a428";
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=9c005e62d72b836ee4b52b06d168a428&units=imperial";
     
     fetch(apiUrl).then(function(response) {
         if (response.ok){
             response.json().then(function (data){
                 console.log(data);
+                currentWeather(data);
             })
         } else{
             alert("Error: ", response.statusText);
         }
     })
+}
+
+function currentWeather(data){
+    var cityCurrentWeather = {
+        cityName: data.name,
+        currentIcon: data.weather[0].icon,
+        currentTemp: data.main.temp,
+        currentHumidity: data.main.humidity,
+        currentWindSpeed: data.wind.speed
+        // currentUvIndex = data.
+    }
+
+    var cityNameEl = document.createElement("h1");
+    cityNameEl.textContent = cityCurrentWeather.cityName + " " + cityCurrentWeather.currentIcon;
+    currentWeatherEl.append(cityNameEl);
+
+    var temperatureEl = document.createElement("p");
+    temperatureEl.textContent = "Temperature: " + cityCurrentWeather.currentTemp;
+    currentWeatherEl.append(temperatureEl);
+
+
+
+
 }
 
 // listener on submit button 
