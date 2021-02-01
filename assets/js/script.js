@@ -96,6 +96,8 @@ function currentWeather(data){
         currentUvIndex: data.current.uvi
     }
 
+    currentWeatherEl.setAttribute("class", "col");
+
     var cityNameEl = document.createElement("h1");
     cityNameEl.textContent = cityName;
     currentWeatherEl.append(cityNameEl);
@@ -105,8 +107,6 @@ function currentWeather(data){
     currentWeatherEl.append(todaysDateEl);
 
     var iconEl = document.createElement("img");
-    // iconEl.setAttribute("id", cityCurrentWeather.currentIcon.id);
-    // iconEl.setAttribute("class", cityCurrentWeather.currentIcon.icon);
     iconEl.setAttribute("src", "http://openweathermap.org/img/wn/" + cityCurrentWeather.currentIcon.icon + "@2x.png");
     currentWeatherEl.append(iconEl);
 
