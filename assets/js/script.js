@@ -169,10 +169,11 @@ function getFiveDayWeather(lat, long){
 }
 
 function fiveDayWeather(data){
-    for (var i = 0; i < 5; i++){
+    for (var i = 1; i < 6; i++){
         var dailyDateEl = document.createElement("div");
         dailyDateEl.setAttribute("class", "col card");
-        dailyDateEl.textContent = data.daily[i].dt;
+        formatDate(data.daily[i].dt);
+        dailyDateEl.textContent = formattedDate;
         fiveDayEl.append(dailyDateEl);
 
         var iconEl = document.createElement("img");
