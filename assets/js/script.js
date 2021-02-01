@@ -105,11 +105,11 @@ function currentWeather(data){
     currentWeatherEl.append(todaysDateEl);
 
     var iconEl = document.createElement("img");
-    iconEl.setAttribute("id", cityCurrentWeather.currentIcon.id);
-    iconEl.setAttribute("class", cityCurrentWeather.currentIcon.icon);
+    // iconEl.setAttribute("id", cityCurrentWeather.currentIcon.id);
+    // iconEl.setAttribute("class", cityCurrentWeather.currentIcon.icon);
     iconEl.setAttribute("src", "http://openweathermap.org/img/wn/" + cityCurrentWeather.currentIcon.icon + "@2x.png");
-    // iconEl.setAttribute("width", "10");
-    // iconEl.setAttribute("height", "10");
+    iconEl.setAttribute("width", "100px");
+    iconEl.setAttribute("height", "100px");
     currentWeatherEl.append(iconEl);
 
     var temperatureEl = document.createElement("p");
@@ -152,10 +152,9 @@ function fiveDayWeather(data){
         dailyDateEl.textContent = data.daily[i].dt;
         fiveDayEl.append(dailyDateEl);
 
-        // var iconEl = document.createElement("i");
-        // iconEl.setAttribute("id", data.daily[i].weather[0].id);
-        // iconEl.textContent = test;
-        // dailyDateEl.append(iconEl);
+        var iconEl = document.createElement("img");
+        iconEl.setAttribute("src", "http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + "@2x.png");
+        dailyDateEl.append(iconEl);
 
         var temperatureEl = document.createElement("p");
         temperatureEl.textContent = "Temp: " + data.daily[i].temp.day + " ℉";
