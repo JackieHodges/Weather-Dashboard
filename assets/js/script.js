@@ -2,6 +2,7 @@ var submitBtn = document.querySelector('.btn-submit');
 var cityInput = document.querySelector('input');
 var cityName;
 var todaysDate;
+var formattedDate;
 var pastCityNames= [];
 var pastCityColumnEl = document.querySelector(".past-city");
 var currentWeatherEl = document.querySelector(".current-weather");
@@ -103,7 +104,8 @@ function currentWeather(data){
     currentWeatherEl.append(cityNameEl);
 
     var todaysDateEl = document.createElement("h1");
-    todaysDateEl.textContent = todaysDate;
+    formatDate(todaysDate);
+    todaysDateEl.textContent = formattedDate;
     currentWeatherEl.append(todaysDateEl);
 
     var iconEl = document.createElement("img");
@@ -127,6 +129,16 @@ function currentWeather(data){
     colorUV(uvIndexEl, cityCurrentWeather.currentUvIndex);
     currentWeatherEl.append(uvIndexEl);
 
+}
+
+function formatDate(date){
+    var miliseconds = (date * 1000);
+    var dateObject = new Date(miliseconds);
+    var humanDateFormat = dateObject.toLocaleString();
+    var formatMonth = dateObject.getMonth() + 1;
+    var formatDay = dateObject.getDate();
+    var formatYear = dateObject.getFullYear();
+    formattedDate = formatMonth + "/" + formatDay + "/" + formatYear;
 }
 
 function colorUV(element, value){
