@@ -46,6 +46,10 @@ function init(){
         pastCityNames = storedCities;
         pastCityColumnEl.innerHTML= "";
         addPastCity();
+
+        // loads last city searched and displays when page is reloaded
+        var lastCityEntered = storedCities[storedCities.length-1];
+        getLatLongs(lastCityEntered);
     }
 }
 
