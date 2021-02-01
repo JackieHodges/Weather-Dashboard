@@ -89,7 +89,7 @@ function getCurrentWeather(lat, long){
 function currentWeather(data){
     var cityCurrentWeather = {
         cityName: cityName,
-        currentIcon: data.current.weather[0].id,
+        currentIcon: data.current.weather[0],
         currentTemp: data.current.temp,
         currentHumidity: data.current.humidity,
         currentWindSpeed: data.current.wind_speed,
@@ -104,9 +104,12 @@ function currentWeather(data){
     todaysDateEl.textContent = todaysDate;
     currentWeatherEl.append(todaysDateEl);
 
-    var iconEl = document.createElement("i");
-    iconEl.setAttribute("id", cityCurrentWeather.currentIcon);
-    // iconEl.setAttribute("class", cityCurrentWeather.currentIcon.icon);
+    var iconEl = document.createElement("img");
+    iconEl.setAttribute("id", cityCurrentWeather.currentIcon.id);
+    iconEl.setAttribute("class", cityCurrentWeather.currentIcon.icon);
+    iconEl.setAttribute("src", "http://openweathermap.org/img/wn/" + cityCurrentWeather.currentIcon.icon + "@2x.png");
+    // iconEl.setAttribute("width", "10");
+    // iconEl.setAttribute("height", "10");
     currentWeatherEl.append(iconEl);
 
     var temperatureEl = document.createElement("p");
