@@ -108,8 +108,6 @@ function currentWeather(data){
     // iconEl.setAttribute("id", cityCurrentWeather.currentIcon.id);
     // iconEl.setAttribute("class", cityCurrentWeather.currentIcon.icon);
     iconEl.setAttribute("src", "http://openweathermap.org/img/wn/" + cityCurrentWeather.currentIcon.icon + "@2x.png");
-    iconEl.setAttribute("width", "100px");
-    iconEl.setAttribute("height", "100px");
     currentWeatherEl.append(iconEl);
 
     var temperatureEl = document.createElement("p");
