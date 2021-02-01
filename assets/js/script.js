@@ -124,8 +124,21 @@ function currentWeather(data){
 
     var uvIndexEl = document.createElement("p");
     uvIndexEl.textContent = "UV Index: " + cityCurrentWeather.currentUvIndex;
+    colorUV(uvIndexEl, cityCurrentWeather.currentUvIndex);
     currentWeatherEl.append(uvIndexEl);
 
+}
+
+function colorUV(element, value){
+    if (value < 5){
+        element.setAttribute("style", "background-color:yellow");
+    } else if (value < 7) {
+        element.setAttribute("style", "background-color:orange");
+    } else if (value < 10){
+        element.setAttribute("style", "background-color:red");
+    } else {
+        element.setAttribute("style", "background-color:purple");
+    }
 }
 
 function getFiveDayWeather(lat, long){
