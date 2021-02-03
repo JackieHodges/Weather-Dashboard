@@ -44,5 +44,5 @@ Below are screenshots of the page:
 
 I used the OpenWeather API to fetch current and future weather data. It can be found here: [OpenWeather API](https://openweathermap.org/api). I also used the documentation to ensure the proper weather icons were displayed.
 
-OpenWeather API returned the day/time in a UNIX timestamp. I used resources located at [Coder Rocket Fuel](https://coderrocketfuel.com/article/convert-a-unix-timestamp-to-a-date-in-vanilla-javascript) and [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) to ensure the date was formated as requested.
+OpenWeather API returned the day/time in a UNIX timestamp. I used resources located at [Coder Rocket Fuel](https://coderrocketfuel.com/article/convert-a-unix-timestamp-to-a-date-in-vanilla-javascript) and [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) to ensure the date was formatted as requested.
 
