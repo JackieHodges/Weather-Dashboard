@@ -53,6 +53,7 @@ function init(){
     }
 }
 
+// using the city name, this function outputs a lat and long that will be used to get weather data
 function getLatLongs(city){
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=9c005e62d72b836ee4b52b06d168a428&units=imperial";
 
@@ -64,17 +65,19 @@ function getLatLongs(city){
                 console.log("long", data.coord.lon);
                 cityName = city;
                 todaysDate = data.dt;
+                // using the fetched data, get current and 5-day weather using lat and longs as inputted parameters
                 getCurrentWeather(data.coord.lat, data.coord.lon);
                 getFiveDayWeather(data.coord.lat, data.coord.lon);
             })
         } else{
             fiveDayEl.innerHTML = "";
-            alert("Error: City cannot be read.", response.statusText);
+            alert("Error: " + response.status);
             return;
         }
     })
 }
 
+// using the lat and longs, current weather info can be fetched
 function getCurrentWeather(lat, long){
     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&exclude=minutely,hourly,daily,alerts&appid=9c005e62d72b836ee4b52b06d168a428&units=imperial";
     
@@ -85,12 +88,13 @@ function getCurrentWeather(lat, long){
                 currentWeather(data);
             })
         } else{
-            alert("Error: ", response.statusText);
+            alert("Error: " + response.status);
         }
     })
 
 }
 
+// the current weather is displayed
 function currentWeather(data){
     var cityCurrentWeather = {
         cityName: cityName,
@@ -135,6 +139,7 @@ function currentWeather(data){
 
 }
 
+// the fetched date is in UNIX, and this function formats it into a usable date
 function formatDate(date){
     var miliseconds = (date * 1000);
     var dateObject = new Date(miliseconds);
@@ -145,6 +150,7 @@ function formatDate(date){
     formattedDate = formatMonth + "/" + formatDay + "/" + formatYear;
 }
 
+// this colors the UV Element based on its value
 function colorUV(element, value){
     if (value < 5){
         element.setAttribute("style", "background-color:yellow");
@@ -157,6 +163,7 @@ function colorUV(element, value){
     }
 }
 
+// using the lat and longs, 5 day weather info can be fetched
 function getFiveDayWeather(lat, long){
     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&exclude=current,minutely,hourly,alerts&appid=9c005e62d72b836ee4b52b06d168a428&units=imperial";
     fetch(apiUrl).then(function(response) {
@@ -167,11 +174,12 @@ function getFiveDayWeather(lat, long){
                 fiveDayWeather(data);
             })
         } else{
-            alert("Error: ", response.statusText);
+            alert("Error: " + response.status);
         }
     })
 }
 
+// 5 day weather is displayed
 function fiveDayWeather(data){
     for (var i = 1; i < 6; i++){
         var dailyDateEl = document.createElement("div");
@@ -216,5 +224,5 @@ submitBtn.addEventListener("click", function(){
     }
 });
 
-
+// runs init function every time the page is reloaded
 init();
