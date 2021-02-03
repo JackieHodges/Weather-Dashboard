@@ -133,6 +133,7 @@ function currentWeather(data){
     currentWeatherEl.append(windSpeedEl);
 
     var uvIndexEl = document.createElement("p");
+    uvIndexEl.setAttribute("class", "col-2");
     uvIndexEl.textContent = "UV Index: " + cityCurrentWeather.currentUvIndex;
     colorUV(uvIndexEl, cityCurrentWeather.currentUvIndex);
     currentWeatherEl.append(uvIndexEl);
